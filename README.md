@@ -2,6 +2,13 @@
 
 A beginner-friendly personal expense tracker built with Python, Flask, MySQL, HTML, CSS, and a little JavaScript.
 
+A personal expense tracker built with Python, Flask, MySQL, HTML, CSS, and JavaScript.
+
+**[Live Demo](https://spendsmart-k0d6.onrender.com)** | **[Source Code](https://github.com/diksha-0503/SpendSmart)**
+
+## Tech Stack
+Python · Flask · MySQL · HTML · CSS · JavaScript
+
 ## Features
 
 - Dashboard with this month's income, expenses, and remaining balance
