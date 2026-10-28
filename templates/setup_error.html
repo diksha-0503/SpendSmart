@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% block title %}Setup needed | SpendSmart{% endblock %}
+{% block content %}
+<section class="panel error-panel">
+    <div class="empty-icon">!</div>
+    <h1>Database connection needed</h1>
+    <p>SpendSmart could not connect to MySQL. Check that MySQL is running, you created the database using <code>database/schema.sql</code>, and your <code>.env</code> settings are correct.</p>
+    <p>See <code>README.md</code> for setup steps. The detailed error is available in the VS Code terminal.</p>
+</section>
+{% endblock %}

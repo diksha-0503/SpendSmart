@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% set is_edit = transaction is not none %}
+{% block title %}{{ 'Edit' if is_edit else 'Add' }} transaction | SpendSmart{% endblock %}
+{% block content %}
+<section class="page-heading">
+    <div><p class="eyebrow">TRANSACTION DETAILS</p><h1>{{ 'Edit transaction' if is_edit else 'Add a transaction' }}</h1><p class="muted">Enter the details below. Fields marked * are required.</p></div>
+</section>
+
+<section class="panel form-panel">
+    <form method="POST" class="transaction-form">
+        <div class="form-grid">
+            <label class="full-width">Title *
+                <input type="text" name="title" maxlength="100" required placeholder="e.g. Lunch with friends" value="{{ request.form.get('title', transaction.title if transaction else '') }}">
+            </label>
+            <label>Type *
+                {% set current_type = request.form.get('transaction_type', transaction.transaction_type if transaction else 'expense') %}
+                <select name="transaction_type" required>
+                    <option value="expense" {{ 'selected' if current_type == 'expense' else '' }}>Expense</option>
+                    <option value="income" {{ 'selected' if current_type == 'income' else '' }}>Income</option>
+                </select>
+            </label>
+            <label>Amount (₹) *
+                <input type="number" name="amount" min="0.01" step="0.01" required placeholder="0.00" value="{{ request.form.get('amount', transaction.amount if transaction else '') }}">
+            </label>
+            <label>Category *
+                {% set current_category = request.form.get('category', transaction.category if transaction else '') %}
+                <select name="category" id="category" required>
+                    <option value="">Choose a category</option>
+                    {% for cat in ['Food', 'Transport', 'Study', 'Shopping', 'Bills', 'Health', 'Allowance', 'Salary', 'Other'] %}
+                    <option value="{{ cat }}" {{ 'selected' if current_category == cat else '' }}>{{ cat }}</option>
+                    {% endfor %}
+                </select>
+            </label>
+            <label>Date *
+                <input type="date" name="transaction_date" required value="{{ request.form.get('transaction_date', transaction.transaction_date.isoformat() if transaction else today) }}">
+            </label>
+            <label class="full-width">Notes <span class="optional">(optional)</span>
+                <textarea name="notes" rows="3" maxlength="255" placeholder="Add a short note...">{{ request.form.get('notes', transaction.notes if transaction and transaction.notes else '') }}</textarea>
+            </label>
+        </div>
+        <div class="form-actions">
+            <a class="button secondary" href="{{ url_for('transactions') }}">Cancel</a>
+            <button class="button primary" type="submit">{{ 'Save changes' if is_edit else 'Save transaction' }}</button>
+        </div>
+    </form>
+</section>
+{% endblock %}
